@@ -77,6 +77,10 @@ invisible_thread_3d/
 
 [View / Download Round 2 Presentation](Invisible_Thread_Hackathon_Deck.pptx)
 
+## 🎥 Project Demo Video
+
+[▶️ Watch Project Demo](https://drive.google.com/file/d/17ZMNA0oDJoPoAOLs4t-ZtCz85fb5VX-C/view?usp=drive_link)
+
 
 ## 🚀 Future Scope
 
