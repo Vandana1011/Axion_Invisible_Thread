@@ -73,6 +73,11 @@ invisible_thread_3d/
 └── FINAL_DELIVERY_CHECKLIST.txt
 ```
 
+## 📊 Project Presentation
+
+[View / Download Round 2 Presentation](.Invisible_Thread_Hackathon_Deck.pptx)
+
+
 ## 🚀 Future Scope
 
 - Improve geographical and network analysis.
