@@ -32,12 +32,14 @@ Through interactive maps and scenario summaries, users can explore geographical 
 
 ## ✨ Key Features
 
-- 🗺️ **Geographical Mapping:** Explore mapped healthcare facilities across Andhra Pradesh.
-- ⚡ **Disruption Simulator:** Investigate hypothetical disruptions around a selected facility.
-- 🔗 **Connection Exploration:** Examine potential geographical connections between facilities.
-- 📊 **Insights Dashboard:** View scenario summaries and comparisons.
-- 🏥 **Nearby Facility Analysis:** Identify mapped facilities within a selected radius.
-- 🔌 **Backend Integration:** Process scenario requests through a Python API.
+- 🗺️ **Interactive Geographical Mapping:** Explore mapped healthcare facilities and locations.
+- ⚡ **Disruption Simulator:** Create hypothetical scenarios and examine their potential consequences.
+- 🛣️ **Alternative Route Exploration:** View alternative road routes for a selected starting point.
+- 🏥 **Healthcare Accessibility Exploration:** Identify nearby mapped facilities that may be worth investigating as alternatives.
+- 🔗 **Impact and Connection Exploration:** Examine potential relationships between a disruption, nearby facilities and connected services.
+- 📊 **Scenario Insights:** Review scenario summaries and comparisons to support further investigation.
+
+**Scope note:** Results depend on the available data and implemented scenario logic. Nearby facilities are not guaranteed to be operational substitutes, and simulated impacts should not be interpreted as validated real-world predictions.
 
 ## 🛠️ Technology Stack
 
