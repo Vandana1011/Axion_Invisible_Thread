@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070b14">
+<meta name="description" content="INVISIBLE THREAD — mapping potential healthcare infrastructure dependencies across Andhra Pradesh.">
+<title>INVISIBLE THREAD | Infrastructure Intelligence</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#070b14; --panel:#101827; --line:#26364b;
+  --muted:#91a4bd; --text:#edf5ff; --cyan:#51d9f5;
+  --pink:#ff719b; --amber:#ffc66d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,Segoe UI,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button,a{-webkit-tap-highlight-color:transparent}
+nav{height:76px;display:flex;align-items:center;justify-content:space-between;
+padding:0 6%;border-bottom:1px solid #26364b;background:#080e19;
+position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border:1px solid var(--cyan);border-radius:12px;
+display:grid;place-items:center;color:var(--cyan);font-weight:900;
+box-shadow:0 0 24px #51d9f522}
+.brand strong{font-size:13px;letter-spacing:2px}
+.brand small{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.links{display:flex;gap:25px;align-items:center;font-size:12px;color:#b5c5d9}
+.links a:hover{color:var(--cyan)}
+.links .active{color:var(--cyan)}
+.nav-cta,.primary{background:var(--cyan);color:#07101b;font-weight:800;
+border-radius:9px;padding:12px 17px;display:inline-flex;align-items:center;
+justify-content:center;font-size:12px;transition:.2s}
+.nav-cta:hover,.primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px #51d9f533}
+.hero{position:relative;overflow:hidden;min-height:650px;padding:100px 7% 85px;
+display:flex;align-items:center;border-bottom:1px solid var(--line)}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(ellipse at 77% 45%,#153b5866 0,transparent 42%),
+radial-gradient(ellipse at 14% 85%,#a52b5c16 0,transparent 40%)}
+.grid-bg{position:absolute;inset:0;opacity:.22;pointer-events:none;
+background-image:linear-gradient(#53718b20 1px,transparent 1px),
+linear-gradient(90deg,#53718b20 1px,transparent 1px);
+background-size:58px 58px;mask-image:linear-gradient(to right,transparent,#000)}
+.hero-inner{position:relative;z-index:1;max-width:790px}
+.eyebrow{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:3px;
+text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.pulse{height:7px;width:7px;background:var(--cyan);border-radius:50%;
+box-shadow:0 0 15px var(--cyan)}
+h1{font-size:clamp(44px,7vw,88px);line-height:1.02;letter-spacing:-3px;
+margin:26px 0 22px;font-weight:850}
+h1 span{color:var(--cyan)}
+.lead{font-size:16px;line-height:1.9;color:#a8bad0;max-width:640px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.secondary{border:1px solid #3a4b60;padding:12px 17px;border-radius:9px;
+font-size:12px;font-weight:700;background:#10182788}
+.secondary:hover{border-color:var(--cyan)}
+.hero-note{font-size:10px;color:#7187a1;margin-top:26px;letter-spacing:.4px}
+.orbit{position:absolute;right:5%;top:18%;width:min(35vw,390px);aspect-ratio:1;
+border:1px solid #51d9f52c;border-radius:50%;pointer-events:none}
+.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid #51d9f51c;
+border-radius:50%;inset:12%}
+.orbit:after{inset:25%;border-color:#ff719b35}
+.orbit-core{position:absolute;inset:36%;border-radius:50%;
+background:radial-gradient(circle,#51d9f577,#51d9f508 70%);
+box-shadow:0 0 70px #51d9f52b}
+.node{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--cyan);
+box-shadow:0 0 18px currentColor}
+.n1{top:14%;left:28%}.n2{top:42%;right:8%;background:var(--pink);color:var(--pink)}
+.n3{bottom:18%;left:23%;background:var(--amber);color:var(--amber)}
+.n4{top:24%;right:27%;width:5px;height:5px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);
+background:#0a111d}
+.metric{padding:27px 6%;border-right:1px solid var(--line)}
+.metric:last-child{border-right:0}
+.metric strong{display:block;font-size:clamp(22px,3vw,34px);letter-spacing:-1px}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.7;margin-top:8px}
+.section{padding:85px 7%}
+.section-head{max-width:670px;margin-bottom:35px}
+.kicker{font-size:10px;color:var(--pink);letter-spacing:2px;font-weight:800}
+h2{font-size:clamp(28px,4vw,43px);letter-spacing:-1.4px;margin:13px 0}
+.section-head p{font-size:13px;color:var(--muted);line-height:1.9}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{padding:25px;border:1px solid var(--line);border-radius:15px;
+background:linear-gradient(145deg,#111c2c,#0b111c);min-height:205px}
+.card .num{font-size:11px;color:var(--cyan);letter-spacing:2px}
+.card h3{font-size:17px;margin:25px 0 10px}
+.card p{font-size:12px;line-height:1.8;color:var(--muted);margin:0}
+.callout{border:1px solid #51d9f536;border-radius:18px;padding:35px;
+background:radial-gradient(ellipse at 100% 0,#51d9f515,transparent 60%),#0d1725;
+display:flex;justify-content:space-between;align-items:center;gap:25px}
+.callout h2{font-size:clamp(24px,3vw,36px);margin-top:0}
+.callout p{color:var(--muted);font-size:12px;line-height:1.8;max-width:600px}
+footer{padding:25px 7%;border-top:1px solid var(--line);display:flex;
+justify-content:space-between;gap:20px;flex-wrap:wrap;color:#7f93ad;font-size:10px}
+footer strong{letter-spacing:1.5px;color:#dce9f8}
+@media(max-width:800px){
+ .links{gap:12px}.links a:not(.nav-cta){display:none}
+ .hero{min-height:590px;padding:75px 7%}
+ .orbit{right:-18%;top:12%;width:65vw;opacity:.6}
+ .hero-inner{max-width:100%}
+ .metrics{grid-template-columns:repeat(2,1fr)}
+ .metric:nth-child(2){border-right:0}
+ .metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .cards{grid-template-columns:1fr}
+ .card{min-height:0}
+ .callout{align-items:flex-start;flex-direction:column}
+ h1{letter-spacing:-2px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="index.html">
+    <span class="logo">IT</span>
+    <span><strong>INVISIBLE THREAD</strong><small>INFRASTRUCTURE INTELLIGENCE</small></span>
+  </a>
+  <div class="links">
+    <a class="active" href="index.html">Home</a>
+    <a href="explorer.html">Explorer</a>
+    <a href="simulator.html">Simulator</a>
+    <a href="insights.html">Insights</a>
+    <a href="about.html">About</a>
+    <a class="nav-cta" href="explorer.html">Launch Explorer ↗</a>
+  </div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="orbit"><div class="orbit-core"></div><i class="node n1"></i>
+    <i class="node n2"></i><i class="node n3"></i><i class="node n4"></i></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><i class="pulse"></i> Healthcare infrastructure · Andhra Pradesh</div>
+    <h1>See the system.<br>Find the <span>invisible</span><br>connections.</h1>
+    <p class="lead">Healthcare facilities do not operate in isolation. INVISIBLE THREAD explores the spatial relationships between hospitals and pharmacies, helping reveal potential proximity-based dependencies and investigate what disruption could mean for a connected network.</p>
+    <div class="actions">
+      <a class="primary" href="explorer.html">Explore the network &nbsp; ↗</a>
+      <a class="secondary" href="about.html">Understand the methodology</a>
+    </div>
+    <div class="hero-note">SPATIAL DATA · NETWORK EXPLORATION · WHAT-IF ANALYSIS</div>
+  </div>
+</section>
+
+<section class="metrics" aria-label="Dataset summary">
+  <div class="metric"><strong>2,978</strong><span>FACILITY RECORDS IN THE CURRENT DATASET</span></div>
+  <div class="metric"><strong>26</strong><span>APPROXIMATE CITY-CENTRED SEARCH AREAS</span></div>
+  <div class="metric"><strong>5,031</strong><span>PROXIMITY CANDIDATE LINKS</span></div>
+  <div class="metric"><strong>3 km</strong><span>HOSPITAL–PHARMACY CANDIDATE SEARCH DISTANCE</span></div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="kicker">THE PLATFORM</div>
+    <h2>One network. Five ways to explore it.</h2>
+    <p>Move from a geographic overview to facility-level exploration, simulated disruptions, regional patterns, and a transparent account of how the data was assembled.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="num">01 / EXPLORE</div><h3>Network Explorer</h3><p>Search facilities, filter by region or category, and inspect mapped locations and proximity-candidate connections.</p></article>
+    <article class="card"><div class="num">02 / TEST</div><h3>Disruption Simulator</h3><p>Run a what-if scenario for a selected facility and inspect nearby candidate relationships. Results are exploratory, not predictions of real-world harm.</p></article>
+    <article class="card"><div class="num">03 / UNDERSTAND</div><h3>Insights & Analytics</h3><p>Compare the current dataset across areas, examine category counts, and identify where the collected records have coverage gaps.</p></article>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="callout">
+    <div><div class="kicker">START INVESTIGATING</div><h2>Every connection begins with a question.</h2>
+      <p>Explore the mapped facilities and candidate links. A nearby pharmacy is a spatial candidate, not proof of a verified supplier relationship.</p></div>
+    <a class="primary" href="explorer.html">Open Network Explorer ↗</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>INVISIBLE THREAD</strong>
+  <span>Spatial infrastructure intelligence · Andhra Pradesh</span>
+  <span>Research prototype · Candidate links are not verified dependencies</span>
+</footer>
+</body>
+</html>

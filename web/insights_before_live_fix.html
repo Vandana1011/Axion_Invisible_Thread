@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVISIBLE THREAD | Intelligence</title>
+<style>
+:root{
+ --bg:#080808;--panel:#131210;--panel2:#1a1710;--gold:#d8ad55;
+ --gold2:#f5d992;--text:#f5f1e7;--muted:#aaa397;
+ --line:#383020;--red:#e68170;--green:#a8c99a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+ font:15px/1.65 Inter,Segoe UI,Arial,sans-serif}
+nav{display:flex;justify-content:space-between;align-items:center;
+ flex-wrap:wrap;gap:15px;padding:20px 5%;border-bottom:1px solid var(--line);
+ background:#0c0b09}
+.brand{font-weight:850;letter-spacing:3px;color:var(--gold2)}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:13px}
+nav a:hover{color:var(--gold2)}
+main{max-width:1180px;margin:auto;padding:42px 22px 75px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:800}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.08;margin:12px 0}
+h2{font-size:23px;margin:0 0 7px}
+h3{font-size:17px;margin:0 0 8px}
+p,.muted{color:var(--muted)}
+.hero{padding:28px 0 24px}
+.hero p{max-width:720px}
+.status{font-size:12px;color:var(--gold);margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}
+.card{background:linear-gradient(145deg,#191711,#100f0d);
+ border:1px solid var(--line);border-radius:14px;padding:21px;min-width:0}
+.metric-label{font-size:12px;color:var(--muted)}
+.metric{font-size:clamp(25px,3vw,36px);font-weight:800;color:var(--gold2);margin:8px 0}
+.section{margin-top:38px}
+.section-intro{margin-top:0}
+.decision{border:1px solid #80642f;background:
+ radial-gradient(ellipse at top right,#332713,#17130d 65%);
+ border-radius:18px;padding:25px;margin-top:18px}
+.decision-tag{display:inline-block;border:1px solid #80642f;color:var(--gold2);
+ border-radius:30px;padding:4px 10px;font-size:11px;letter-spacing:1px}
+.decision h2{font-size:27px;margin-top:14px;color:var(--gold2)}
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.action{border-top:1px solid var(--line);padding:14px 0}
+.action strong{color:var(--gold2);display:block;margin-bottom:4px}
+.barrow{margin:21px 0}
+.barhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.track{height:10px;border-radius:20px;background:#302b20;overflow:hidden;margin-top:9px}
+.fill{height:100%;background:linear-gradient(90deg,#9b742d,#f5d992);border-radius:20px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:15px 0}
+input,select{background:#0d0c0a;color:var(--text);border:1px solid #62502c;
+ border-radius:8px;padding:10px 12px;font:inherit;max-width:100%}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line)}
+th{color:var(--gold2);font-size:12px;letter-spacing:.4px}
+td{font-size:13px}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:20px;
+ padding:3px 8px;font-size:11px;color:var(--gold2)}
+.warning{border-left:3px solid var(--gold);background:#19150d;
+ padding:17px 19px;border-radius:5px;color:#d5cbb5}
+footer{border-top:1px solid var(--line);padding:25px;text-align:center;
+ color:var(--muted);font-size:12px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ main{padding:28px 15px 50px}.grid{grid-template-columns:1fr 1fr;gap:9px}
+ .card{padding:15px}.decision{padding:18px}.decision-grid{grid-template-columns:1fr}
+ nav{padding:16px}nav a{margin:0 8px 0 0}
+}
+</style>
+</head>
+<body>
+<nav>
+ <div class="brand">INVISIBLE THREAD</div>
+ <div>
+  <a href="index.html">Home</a><a href="explorer.html">Explorer</a>
+  <a href="simulator.html">Simulator</a><a href="insights.html">Insights</a>
+  <a href="about.html">About</a>
+ </div>
+</nav>
+
+<main>
+ <header class="hero">
+  <div class="eyebrow">NETWORK INTELLIGENCE / DECISION SUPPORT</div>
+  <h1>See the risk.<br><span style="color:var(--gold2)">Decide what comes next.</span></h1>
+  <p>Insights derived from simulated healthcare-network disruptions. Compare scenarios,
+  identify where candidate options disappear, and understand which follow-up checks deserve attention.</p>
+  <div class="status" id="status">CONNECTING TO SIMULATION RESULTS…</div>
+ </header>
+
+ <div class="grid">
+  <div class="card"><div class="metric-label">Hospitals evaluated</div><div class="metric" id="hospitals">—</div><div class="muted">Baseline scenario</div></div>
+  <div class="card"><div class="metric-label">Baseline candidate options</div><div class="metric" id="baseline">—</div><div class="muted">Mapped proximity candidates</div></div>
+  <div class="card"><div class="metric-label">Options remaining · Scenario 2</div><div class="metric" id="remaining">—</div><div class="muted">Two candidates unavailable</div></div>
+  <div class="card"><div class="metric-label">Hospitals with zero candidates</div><div class="metric" id="zero">—</div><div class="muted">Scenario 2 result</div></div>
+ </div>
+
+ <section class="section">
+  <div class="eyebrow">01 / RECOMMENDED NEXT STEP</div>
+  <div class="decision">
+   <span class="decision-tag" id="decisionTag">AWAITING DATA</span>
+   <h2 id="decisionTitle">Preparing your decision brief…</h2>
+   <p id="decisionSummary">The recommendation will be calculated from the loaded scenario results.</p>
+   <div class="decision-grid">
+    <div class="action"><strong>Why this matters</strong><span id="why">Waiting for scenario comparison.</span></div>
+    <div class="action"><strong>Recommended action</strong><span id="action">Waiting for scenario comparison.</span></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="eyebrow">02 / SCENARIO COMPARISON</div>
+  <h2>How resilience changes</h2>
+  <p class="section-intro">Candidate options remaining relative to the baseline. These are scenario results, not live conditions.</p>
+  <div class="card" id="bars">Loading comparison…</div>
+ </section>
+
+ <section class="section">
+  <div class="eyebrow">03 / FIND A CITY</div>
+  <h2>City-level impact explorer</h2>
+  <p class="section-intro">Choose a scenario to compare evaluated hospitals, removed options, and hospitals with no remaining candidates.</p>
+  <div class="controls">
+   <select id="scenario">
+    <option>Baseline</option>
+    <option>One candidate unavailable</option>
+    <option>Two candidates unavailable</option>
+   </select>
+   <input id="search" placeholder="Search city…">
+  </div>
+  <div class="card tablewrap">
+   <table><thead><tr><th>City</th><th>Hospitals</th><th>Options removed</th><th>Options remaining</th><th>Zero candidates</th></tr></thead>
+   <tbody id="rows"><tr><td colspan="5">Loading city results…</td></tr></tbody></table>
+  </div>
+ </section>
+
+ <section class="section warning">
+  <strong>Important interpretation limit</strong><br>
+  Candidate links represent mapped geographic proximity, not verified supply relationships,
+  operational dependencies, live inventory, or confirmed service availability. The decision
+  brief identifies priorities for further investigation; it does not prescribe real-world
+  emergency actions.
+ </section>
+</main>
+<footer>INVISIBLE THREAD · Scenario-based infrastructure intelligence</footer>
+
+<script>
+(async()=>{
+ const $=id=>document.getElementById(id);
+ const fmt=n=>Number(n||0).toLocaleString();
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ try{
+  const response=await fetch('./data/simulation_results.json');
+  if(!response.ok)throw Error('Could not load simulation_results.json ('+response.status+')');
+  const data=await response.json();
+  const scenarios=data.scenarios||[];
+  const cities=data.city_scenarios||[];
+  const base=scenarios.find(s=>s.scenario==='Baseline');
+  const one=scenarios.find(s=>s.scenario==='One candidate unavailable');
+  const two=scenarios.find(s=>s.scenario==='Two candidates unavailable');
+  if(!base||!one||!two)throw Error('Expected three named scenarios were not found.');
+
+  $('hospitals').textContent=fmt(base.hospitals_evaluated);
+  $('baseline').textContent=fmt(base.candidate_options_remaining);
+  $('remaining').textContent=fmt(two.candidate_options_remaining);
+  $('zero').textContent=fmt(two.hospitals_with_zero_candidates);
+
+  const removedPct=base.candidate_options_remaining?
+    100*(base.candidate_options_remaining-two.candidate_options_remaining)/base.candidate_options_remaining:0;
+  const zeroIncrease=Number(two.hospitals_with_zero_candidates||0)-Number(base.hospitals_with_zero_candidates||0);
+
+  if(Number(two.hospitals_with_zero_candidates||0)>0){
+   $('decisionTag').textContent='PRIORITY FOR VALIDATION';
+   $('decisionTitle').textContent='Investigate hospitals losing all candidate options';
+   $('decisionSummary').textContent=
+    fmt(two.hospitals_with_zero_candidates)+' hospitals have zero candidate options in the two-candidate-unavailable scenario. Validate these locations before drawing operational conclusions.';
+   $('why').textContent=fmt(zeroIncrease)+' additional zero-candidate cases versus baseline, based on the supplied scenario totals.';
+   $('action').textContent='Inspect affected city rows, verify facility records and actual service relationships, then test alternative candidate links.';
+  }else{
+   $('decisionTag').textContent='SCENARIO REVIEW';
+   $('decisionTitle').textContent='Review remaining candidate coverage';
+   $('decisionSummary').textContent='The two-candidate-unavailable scenario reports no hospitals with zero candidate options. Check data coverage and assumptions before concluding the network is resilient.';
+   $('why').textContent='Zero candidates in this dataset does not establish real-world availability.';
+   $('action').textContent='Validate mapped facilities, distances, and operational relationships; rerun the simulator after any data updates.';
+  }
+
+  $('bars').innerHTML=scenarios.map(s=>{
+   const n=Number(s.candidate_options_remaining||0);
+   const pct=Number(base.candidate_options_remaining)?100*n/Number(base.candidate_options_remaining):0;
+   return `<div class="barrow"><div class="barhead"><strong>${esc(s.scenario)}</strong><span>${fmt(n)} options · ${pct.toFixed(1)}% of baseline</span></div><div class="track"><div class="fill" style="width:${Math.max(0,Math.min(100,pct))}%"></div></div><div class="muted">${fmt(s.hospitals_with_zero_candidates)} hospitals with zero candidates</div></div>`;
+  }).join('');
+
+  function render(){
+   const selected=$('scenario').value;
+   const query=$('search').value.trim().toLowerCase();
+   const filtered=cities.filter(r=>r.scenario===selected&&String(r.city||'').toLowerCase().includes(query));
+   $('rows').innerHTML=filtered.length?filtered.map(r=>`<tr>
+    <td>${esc(r.city)}</td><td>${fmt(r.hospitals_evaluated)}</td>
+    <td>${fmt(r.candidate_options_removed)}</td><td>${fmt(r.candidate_options_remaining)}</td>
+    <td>${fmt(r.hospitals_with_zero_candidates)}</td></tr>`).join(''):
+    '<tr><td colspan="5">No matching city results.</td></tr>';
+  }
+  $('scenario').addEventListener('change',render);
+  $('search').addEventListener('input',render);
+  render();
+  $('status').textContent=`LIVE DATASET LOADED · ${scenarios.length} overall scenarios · ${cities.length} city-scenario records`;
+ }catch(err){
+  $('status').textContent='DATA LOAD ERROR';
+  $('decisionTitle').textContent='Unable to calculate the decision brief';
+  $('decisionSummary').textContent=err.message+' Open this page through the project local server.';
+  $('bars').textContent=err.message;
+ }
+})();
+</script>
+
+<script id="it-live-insights-panel">
+(function () {
+  const panel = document.createElement("section");
+  panel.id = "it-live-insights-panel";
+  panel.style.cssText = [
+    "margin:24px auto",
+    "max-width:1100px",
+    "padding:22px",
+    "border:1px solid #c99a32",
+    "border-radius:14px",
+    "background:#111",
+    "color:#f4ead2",
+    "font:16px/1.6 Arial,sans-serif"
+  ].join(";");
+  panel.innerHTML = "<h2 style='color:#e4b84e;margin-top:0'>Live Simulator Insights</h2>" +
+    "<p id='it-live-insights-content'>Loading latest simulation...</p>";
+  document.body.appendChild(panel);
+
+  const output = document.getElementById("it-live-insights-content");
+
+  function refresh() {
+    let data = null;
+    try {
+      data = JSON.parse(localStorage.getItem("it_live_insights_v1") || "null");
+    } catch (e) {}
+
+    if (!data || !data.results || !data.selected_facility) {
+      output.textContent =
+        "No live simulation yet. Open Simulator, select a facility, and run the scenario.";
+      return;
+    }
+
+    const f = data.selected_facility;
+    const r = data.results;
+    const date = data.updated_at ? new Date(data.updated_at).toLocaleString() : "Unknown";
+
+    output.innerHTML = "";
+    const rows = [
+      ["Selected facility", f.name || "Unnamed facility"],
+      ["City", f.city || "Not specified"],
+      ["Amenity", f.amenity || "Not specified"],
+      ["Potential candidate links", r.candidate_links],
+      ["Other endpoint locations", r.other_endpoint_locations],
+      ["Scenario indicator", r.scenario_indicator],
+      ["Last simulation", date]
+    ];
+
+    rows.forEach(function (item) {
+      const row = document.createElement("p");
+      const label = document.createElement("strong");
+      label.textContent = item[0] + ": ";
+      row.appendChild(label);
+      row.appendChild(document.createTextNode(String(item[1] ?? "—")));
+      output.appendChild(row);
+    });
+
+    const note = document.createElement("p");
+    note.style.cssText = "opacity:.75;font-size:13px";
+    note.textContent =
+      "Interpretation: proximity-based candidate links only. These are not verified operational dependencies or measured real-world impacts.";
+    output.appendChild(note);
+  }
+
+  refresh();
+  window.addEventListener("storage", refresh);
+  window.addEventListener("focus", refresh);
+})();
+</script>
+
+</body>
+</html>

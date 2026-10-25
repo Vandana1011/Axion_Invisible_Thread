@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVISIBLE THREAD | Insights</title>
+<style>
+:root{--bg:#080d18;--panel:#111a2b;--line:#25334a;--text:#edf3ff;
+--muted:#98a8c2;--cyan:#55d9ee;--red:#ff647c;--amber:#ffca70;--green:#68dfb0}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#142541 0%,var(--bg) 58%);
+color:var(--text);font:14px/1.55 Arial,sans-serif}
+main{max-width:1250px;margin:auto;padding:28px 22px 50px}
+a{color:var(--cyan);text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-size:12px;letter-spacing:3px;color:var(--cyan);font-weight:bold}
+h1{font-size:clamp(28px,4vw,43px);margin:14px 0 5px;letter-spacing:-1px}
+.subtitle{color:var(--muted);max-width:760px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+select,button{background:#101c30;color:var(--text);border:1px solid #334561;
+padding:11px 13px;border-radius:9px;font-size:13px}
+button{cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.panel,.metric{background:linear-gradient(145deg,#131f33,#0d1525);
+border:1px solid var(--line);border-radius:15px;padding:18px;min-width:0}
+.metric .label{color:var(--muted);font-size:12px}
+.metric .value{font-size:clamp(24px,3vw,34px);font-weight:700;margin:7px 0}
+.metric .note{font-size:11px;color:var(--muted)}
+h2{font-size:18px;margin:0 0 5px}
+.section-sub{color:var(--muted);font-size:12px;margin:0 0 18px}
+.sections{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.barrow{margin:15px 0}
+.barhead{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin-bottom:7px}
+.track{height:9px;background:#253149;border-radius:20px;overflow:hidden}
+.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#268eaf,var(--cyan))}
+.fill.red{background:linear-gradient(90deg,#b93858,var(--red))}
+.fill.amber{background:linear-gradient(90deg,#a76b32,var(--amber))}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:12px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600}
+td{overflow-wrap:anywhere}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;font-size:10px;
+background:#20314b;color:#b9d5ff}
+.pill.high{background:#48202d;color:#ff9eae}
+.pill.medium{background:#45351e;color:#ffd28b}
+.pill.low{background:#173d37;color:#83edc8}
+.notice{margin-top:18px;border:1px solid #65502e;background:#211b13;
+border-radius:12px;padding:15px;color:#e8d5b0;font-size:12px}
+footer{margin-top:24px;color:var(--muted);font-size:11px}
+.error{color:#ff9eae}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sections{grid-template-columns:1fr}}
+@media(max-width:450px){main{padding:20px 12px}.grid{gap:9px}
+.metric,.panel{padding:13px}.metric .value{font-size:23px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="brand">INVISIBLE THREAD / ANALYTICS</div>
+  <a href="./explorer.html">← Back to Explorer</a>
+</header>
+
+<h1>Healthcare Network Insights</h1>
+<p class="subtitle">
+Explore how hypothetical disruptions affect mapped hospital-to-facility
+proximity candidates across the available Andhra Pradesh city data.
+</p>
+
+<div class="toolbar">
+  <label>Scenario<br><select id="scenario"></select></label>
+  <label>City<br><select id="city"><option value="All">All available cities</option></select></label>
+  <button id="reset">Reset filters</button>
+</div>
+
+<div id="status" class="section-sub">Loading simulation results…</div>
+
+<div class="grid">
+  <div class="metric"><div class="label">Hospitals evaluated</div>
+    <div class="value" id="evaluated">—</div><div class="note">In selected results</div></div>
+  <div class="metric"><div class="label">Candidate options removed</div>
+    <div class="value" id="removed">—</div><div class="note">Simulated disruption impact</div></div>
+  <div class="metric"><div class="label">Candidate options remaining</div>
+    <div class="value" id="remaining">—</div><div class="note">Potential options, not verified links</div></div>
+  <div class="metric"><div class="label">Hospitals with zero candidates</div>
+    <div class="value" id="zero">—</div><div class="note">No candidate options left in this scenario</div></div>
+</div>
+
+<div class="sections">
+  <section class="panel">
+    <h2>Scenario Impact</h2>
+    <p class="section-sub">Removed versus remaining candidate options</p>
+    <div id="impact"></div>
+  </section>
+  <section class="panel">
+    <h2>City-wise Comparison</h2>
+    <p class="section-sub">Candidate options removed in the selected scenario</p>
+    <div id="cities"></div>
+  </section>
+</div>
+
+<section class="panel" style="margin-top:16px">
+  <h2>Hospital-level Risk Signals</h2>
+  <p class="section-sub">Facilities with zero remaining candidates appear first. Use the city filter to narrow results.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Hospital / Facility</th><th>City</th><th>Options before</th>
+      <th>Removed</th><th>Remaining</th><th>Signal</th></tr></thead>
+      <tbody id="hospitalRows"></tbody>
+    </table>
+  </div>
+  <div id="tableNote" class="section-sub" style="margin-top:12px"></div>
+</section>
+
+<div class="notice">
+  <strong>Interpretation & limitations</strong><br>
+  This dashboard reports hypothetical simulation outputs based on proximity-based
+  candidate connections. Candidate connections are not verified operational
+  dependencies. A zero-candidate result is a potential access/connectivity warning
+  in this model, not proof that a hospital is isolated or unavailable in real life.
+  These results do not establish actual service disruption or patient outcomes.
+</div>
+
+<footer>INVISIBLE THREAD · Healthcare infrastructure resilience prototype</footer>
+</main>
+
+<script>
+const fmt = n => Number(n || 0).toLocaleString();
+const $ = id => document.getElementById(id);
+let data;
+
+function num(v){const n=Number(v);return Number.isFinite(n)?n:0}
+function esc(v){return String(v ?? "").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]))}
+function sum(rows,key){return rows.reduce((a,r)=>a+num(r[key]),0)}
+function unique(rows,key){return [...new Set(rows.map(r=>r[key]).filter(Boolean))].sort()}
+
+function option(label,value){
+  return `<option value="${esc(value)}">${esc(label)}</option>`;
+}
+function renderBars(container,rows,labelKey,valueKey,colorClass=""){
+  if(!rows.length){container.innerHTML='<p class="section-sub">No records available.</p>';return}
+  const max=Math.max(1,...rows.map(r=>num(r[valueKey])));
+  container.innerHTML=rows.map(r=>{
+    const value=num(r[valueKey]);
+    const width=Math.max(0,Math.min(100,value/max*100));
+    return `<div class="barrow">
+      <div class="barhead"><span>${esc(r[labelKey])}</span><strong>${fmt(value)}</strong></div>
+      <div class="track"><div class="fill ${colorClass}" style="width:${width}%"></div></div>
+    </div>`;
+  }).join("");
+}
+function getRows(){
+  const scenario=$("scenario").value;
+  const city=$("city").value;
+  const cityRows=data.city_scenarios.filter(r=>
+    r.scenario===scenario && (city==="All"||r.city===city));
+  const hospitalRows=data.hospital_scenarios.filter(r=>
+    r.scenario===scenario && (city==="All"||r.city===city));
+  return {scenario,city,cityRows,hospitalRows};
+}
+function render(){
+  const {scenario,city,cityRows,hospitalRows}=getRows();
+
+  const evaluated=sum(cityRows,"hospitals_evaluated");
+  const removed=sum(cityRows,"candidate_options_removed");
+  const remaining=sum(cityRows,"candidate_options_remaining");
+  const zero=sum(cityRows,"hospitals_with_zero_candidates");
+
+  $("evaluated").textContent=fmt(evaluated);
+  $("removed").textContent=fmt(removed);
+  $("remaining").textContent=fmt(remaining);
+  $("zero").textContent=fmt(zero);
+  $("status").textContent=`Scenario: ${scenario} · City: ${city==="All"?"All available cities":city}`;
+
+  const total=removed+remaining;
+  renderBars($("impact"),[
+    {label:"Options removed",value:removed},
+    {label:"Options remaining",value:remaining}
+  ],"label","value");
+
+  const sortedCities=[...cityRows].sort((a,b)=>
+    num(b.candidate_options_removed)-num(a.candidate_options_removed));
+  renderBars($("cities"),sortedCities,"city","candidate_options_removed","amber");
+
+  const ranked=[...hospitalRows].sort((a,b)=>{
+    const az=Boolean(a.no_candidates_remaining)||num(a.candidate_options_remaining)===0;
+    const bz=Boolean(b.no_candidates_remaining)||num(b.candidate_options_remaining)===0;
+    return Number(bz)-Number(az) ||
+      num(b.candidate_options_removed)-num(a.candidate_options_removed);
+  });
+
+  const shown=ranked.slice(0,100);
+  $("hospitalRows").innerHTML=shown.map(r=>{
+    const rem=num(r.candidate_options_remaining);
+    const before=num(r.candidate_options_before);
+    const lost=num(r.candidate_options_removed);
+    const isZero=Boolean(r.no_candidates_remaining)||rem===0;
+    const ratio=before>0?lost/before:0;
+    const risk=isZero?"High":ratio>=0.5?"Medium":"Low";
+    const cls=risk.toLowerCase();
+    return `<tr>
+      <td><strong>${esc(r.hospital_name||r.hospital_id||"Unnamed facility")}</strong></td>
+      <td>${esc(r.city||"—")}</td><td>${fmt(before)}</td><td>${fmt(lost)}</td>
+      <td>${fmt(rem)}</td><td><span class="pill ${cls}">${risk} signal</span></td>
+    </tr>`;
+  }).join("");
+
+  $("tableNote").textContent=
+    `Showing ${fmt(shown.length)} of ${fmt(ranked.length)} hospital records. `+
+    `Risk signals are rule-based indicators derived from this simulation, not clinical or official risk ratings.`;
+}
+async function init(){
+  try{
+    const response=await fetch("./data/simulation_results.json");
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    data=await response.json();
+
+    const scenarios=unique(data.scenarios||[],"scenario");
+    $("scenario").innerHTML=scenarios.map(s=>option(s,s)).join("");
+    const cities=unique(data.city_scenarios||[],"city");
+    $("city").innerHTML=option("All available cities","All")+
+      cities.map(c=>option(c,c)).join("");
+
+    if(!scenarios.length)throw new Error("No scenario records found.");
+    $("scenario").value=scenarios[0];
+    render();
+  }catch(err){
+    $("status").innerHTML=`<span class="error">Could not load simulation data: ${esc(err.message)}. Open this page through the local website server.</span>`;
+  }
+}
+$("scenario").addEventListener("change",render);
+$("city").addEventListener("change",render);
+$("reset").addEventListener("click",()=>{
+  if($("scenario").options.length)$("scenario").selectedIndex=0;
+  $("city").value="All";
+  render();
+});
+init();
+</script>
+</body>
+</html>
