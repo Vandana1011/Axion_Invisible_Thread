@@ -3278,7 +3278,7 @@ document.getElementById("tilt").addEventListener("click",()=>{
 
   function setUserPoint(point, label) {
     userPoint = point;
-    drawUserRadius(point, 5); // 5 km nearby search circle
+    // drawUserRadius(point, 5); // Temporarily disabled: function is undefined // 5 km nearby search circle
     if (userMarker) userMarker.remove();
     userMarker = addMarker(point, "You", "#3b82f6", label || "Starting location");
     status("Starting location set. Calculating alternatives…");
