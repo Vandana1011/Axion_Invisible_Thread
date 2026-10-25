@@ -75,7 +75,7 @@ invisible_thread_3d/
 
 ## 📊 Project Presentation
 
-[View / Download Round 2 Presentation](.Invisible_Thread_Hackathon_Deck.pptx)
+[View / Download Round 2 Presentation](Invisible_Thread_Hackathon_Deck.pptx)
 
 
 ## 🚀 Future Scope
