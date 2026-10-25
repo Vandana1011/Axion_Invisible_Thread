@@ -101,8 +101,8 @@ Facility data is sourced from [OpenStreetMap](https://www.openstreetmap.org/).
 
 ## 🌐 Project Links
 
-- **GitHub Repository:** https://github.com/shaiksamrin123-ops/Invisible_Thread
-- **Live Demo:** Add the Vercel deployment URL here after deployment.
+- **GitHub Repository:**(https://github.com/Vandana1011/Axion_Invisible_Thread).
+- **Live Demo:**https://axioninvisiblethread-web.vercel.app/.
 
 ---
 
